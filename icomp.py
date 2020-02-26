@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for ,flash
 from forms import SignUpForm,LoginForm
 from flask_sqlalchemy import SQLAlchemy
 
@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '96e582be6947f9b29b1cd0f615a33600'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 
@@ -39,9 +40,12 @@ def contact():
 def login():
 	return render_template('login.html')
 
-@app.route("/signup")
+@app.route("/signup",methods=['GET','POST'])
 def signup():
 	form = SignUpForm()
+	if form.validate_on_submit():
+		return redirect(url_for('home'))
+        # flash(f'Account created for {form.username.data}!', 'success')
 	return render_template('signup.html',form=form)
 
 if '__name__' == '__main__':
