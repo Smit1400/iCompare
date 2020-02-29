@@ -58,7 +58,17 @@
 
         <!-- <header>
 		  <h1>LOL</h1> -->
-		
+		<div class="col-md-8">
+		  {% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+			  {% for category, message in messages %}
+				<div class="alert alert-{{ category }}">
+				  {{ message }}
+				</div>
+			  {% endfor %}
+			{% endif %}
+		  {% endwith %}
+		</div>
 		  <nav class="navclass">
 		      <ul class="group">
 		          <li class="dp"><a href="{{ url_for('home') }}">Home</a></li>
@@ -67,7 +77,8 @@
 		      </ul>
 		  </nav>
 		</header>
-		
+		<div class="row">
+        
 		<section id="main-content">
 		<div id="guts">
 		
