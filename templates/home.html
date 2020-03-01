@@ -27,6 +27,17 @@
 		  <div class="navbar-header">
 			<a class="navbar-brand" href="#">iCompare</a>
 		  </div>
+		  <ul class="nav navbar-nav">
+			<!-- <li class="active"><a href="#">Home</a></li> -->
+			<!-- <li><a href="#">Page 1</a></li>
+			<li><a href="#">Page 2</a></li> -->
+		  </ul>
+		  <!-- <div class="search-container">
+			<form action="/action_page.php">
+			  <input type="text" placeholder="Search.." name="search">
+			  <button type="submit"><i class="fa fa-search"></i></button>
+			</form>
+		  </div> -->
 		  <form class="navbar-form navbar-left" action="/action_page.php">
 			<div class="input-group">
 			  <input type="text" class="form-control" placeholder="Search" name="search">
@@ -37,33 +48,17 @@
 			  </div>
 			</div>
 		  </form>
-		  {% if current_user.is_authenticated %}
-		  	  <ul class="nav navbar-nav navbar-right">
-				<li><a href="{{ url_for('logout') }}"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
-			  </ul>
-		  {% else %}
-			  <ul class="nav navbar-nav navbar-right">
-				<li><a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-				<li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-			  </ul>
-		  {% endif %}
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="{{ url_for('signup') }}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+			<li><a href="{{ url_for('login') }}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+		  </ul>
 		</div>
 	  </nav>
 	 <div id="page-wrap">
 
         <!-- <header>
 		  <h1>LOL</h1> -->
-		<div class="col-md-8">
-		  {% with messages = get_flashed_messages(with_categories=true) %}
-			{% if messages %}
-			  {% for category, message in messages %}
-				<div class="alert alert-{{ category }}">
-				  {{ message }}
-				</div>
-			  {% endfor %}
-			{% endif %}
-		  {% endwith %}
-		</div>
+		
 		  <nav class="navclass">
 		      <ul class="group">
 		          <li class="dp"><a href="{{ url_for('home') }}">Home</a></li>
@@ -73,7 +68,7 @@
 		  </nav>
 		</header>
 		<div class="row">
-        
+			
 		<section id="main-content">
 		<div id="guts">
 		
