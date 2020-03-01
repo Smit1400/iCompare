@@ -47,7 +47,7 @@ def signup():
 		db.session.add(user)
 		db.session.commit()
 		flash(f'Account created successfully for  { form.username.data }' ,'success')
-		return redirect(url_for('home'))
+		return redirect(url_for('login'))
 	return render_template('signup.html',form=form)
 
 @app.route("/logout")
