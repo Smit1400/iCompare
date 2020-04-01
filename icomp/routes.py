@@ -36,6 +36,7 @@ def login():
 			flash('Check your email and password!')
 	return render_template('login.html',form=form)
 
+
 @app.route("/signup",methods=['GET','POST'])
 def signup():
 	if current_user.is_authenticated:
