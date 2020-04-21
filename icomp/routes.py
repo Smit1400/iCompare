@@ -5,9 +5,12 @@ from icomp import app ,db ,bcrypt
 from flask_login import login_user ,current_user ,logout_user
 
 @app.route("/")
-@app.route("/home")
+@app.route("/home",methods=['GET','POST'])
 def home():
-	return render_template('home.html')
+	news1 = News.query.first()
+	news2 = News.query.filter_by(n_id=2).first()
+	news3 = News.query.filter_by(n_id=3).first()
+	return render_template('home.html',news1=news1,news2=news2,news3=news3)
 
 @app.route("/about")
 def about():
