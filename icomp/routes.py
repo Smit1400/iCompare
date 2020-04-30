@@ -1,9 +1,8 @@
-from flask import render_template,redirect ,url_for ,flash, request
+from flask import render_template,redirect ,url_for ,flash, request, send_file
 from icomp.forms import SignUpForm,LoginForm
 from icomp.models import User ,News
 from icomp import app ,db ,bcrypt
 from flask_login import login_user ,current_user ,logout_user
-from sklearn.externals import joblib
 import numpy as np
 import pickle
 import warnings
@@ -29,11 +28,16 @@ def products():
 	pred=None
 	return render_template('products_final.html',pred=pred)
 
+@app.route("/download_graph",methods=['GET','POST'])
+def download_graph():
+	if request.method == "POST":
+		path = 'graph_images/iphone732.png'
+		return send_file(path,as_attachment=True)
+
 @app.route('/predict',methods=['GET','POST'])
 def predict():
 	with open('icomp/model_predict','rb') as f:
 		mp = pickle.load(f)
-	print(mp.predict([[1,4,2020]]))
 	if request.method == "POST":
 		value = request.form["prediction"]
 		l = value.split('-')
@@ -64,6 +68,7 @@ def login():
 		else:
 			flash('Check your email and password!')
 	return render_template('login.html',form=form)
+
 
 
 @app.route("/signup",methods=['GET','POST'])
