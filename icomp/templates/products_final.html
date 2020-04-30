@@ -122,7 +122,9 @@
         <label for="prediction">Input:</label>
         <input type="date" id="prediction" name="prediction">
         <input type="submit">
-        <h3>{{ pred }}</h3>
+        {% if pred %}
+          <h5>Prediction on {{ date }} = Rs.{{ pred }}</h5>
+        {% endif %}
       </form>
     </div>
   </div>

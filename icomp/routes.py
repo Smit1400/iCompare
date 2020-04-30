@@ -26,7 +26,8 @@ def about():
 
 @app.route("/products")
 def products():
-	return render_template('products_final.html')
+	pred=None
+	return render_template('products_final.html',pred=pred)
 
 @app.route('/predict',methods=['GET','POST'])
 def predict():
@@ -41,7 +42,7 @@ def predict():
 		l=[l]
 		pred  = int(mp.predict(l)[0])
 		print(pred)
-		return render_template('products_final.html',pred = pred)
+		return render_template('products_final.html',pred = pred,date=value)
 	# features = request.form.values()
 	# print(features)
 
