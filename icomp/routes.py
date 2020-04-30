@@ -3,10 +3,14 @@ from icomp.forms import SignUpForm,LoginForm
 from icomp.models import User ,News
 from icomp import app ,db ,bcrypt
 from flask_login import login_user ,current_user ,logout_user
+from sklearn.externals import joblib
+import numpy as np
 import pickle
+import warnings
+warnings.filterwarnings("ignore")
 
-my_model = pickle.load(open('model_pickel_final','rb'))
-
+# my_model = pickle.load(open('model_predict','rb'))
+# pr = joblib.load('model_joblib')
 
 @app.route("/")
 @app.route("/home",methods=['GET','POST'])
@@ -26,10 +30,18 @@ def products():
 
 @app.route('/predict',methods=['GET','POST'])
 def predict():
+	with open('icomp/model_predict','rb') as f:
+		mp = pickle.load(f)
+	print(mp.predict([[1,4,2020]]))
 	if request.method == "POST":
 		value = request.form["prediction"]
-		print(value)
-		return render_template('products_final.html',pred = value)
+		l = value.split('-')
+		l = [int(num) for num in l]
+		l=l[::-1]
+		l=[l]
+		pred  = int(mp.predict(l)[0])
+		print(pred)
+		return render_template('products_final.html',pred = pred)
 	# features = request.form.values()
 	# print(features)
 
