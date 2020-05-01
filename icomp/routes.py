@@ -17,16 +17,33 @@ description = ''
 a_name = ''
 a_price = ''
 a_description = ''
-
+n1_title=''
+n1_link=''
+n1_content=''
+n2_title=''
+n2_link=''
+n2_content=''
+n3_title=''
+n3_link=''
+n3_content=''
 
 
 @app.route("/")
 @app.route("/home",methods=['GET','POST'])
 def home():
-	news1 = News.query.first()
-	news2 = News.query.filter_by(n_id=2).first()
-	news3 = News.query.filter_by(n_id=3).first()
-	return render_template('home.html',news1=news1,news2=news2,news3=news3)
+	global n1_title,n2_title,n3_title,n1_link,n2_link,n3_link,n1_content,n2_content,n3_content
+	if n1_title=='' or n2_title=='' or n3_title=='' or n1_link=='' or n2_link=='' or n3_link=='' or n1_content=='' or n2_content=='' or n3_content=='':
+		news_data = news_scrapping()
+		n1_title = news_data['title'][0].strip()
+		n2_title = news_data['title'][1].strip()
+		n3_title = news_data['title'][2].strip()
+		n1_link = news_data['link'][0]
+		n2_link = news_data['link'][1]
+		n3_link = news_data['link'][2]
+		n1_content = news_data['content'][0]
+		n2_content = news_data['content'][1]
+		n3_content = news_data['content'][2]
+	return render_template('home_final.html',n1_title=n1_title,n1_link=n1_link,n2_link=n2_link,n3_link=n3_link,n2_title=n2_title,n3_title=n3_title,n1_conten=n1_content,n2_content=n2_content,n3_content=n3_content)
 
 @app.route("/about")
 def about():
@@ -140,7 +157,6 @@ def admin():
 	if request.method == 'POST':
 		if current_user.is_authenticated:
 			user = User.query.filter_by(username = 'smit.ds').first()
-			print("heeeeeeeeeeeeeeeeeeeeeeeeee: ",user.id,"ouyeeeeeeeeeeeeeeeeeeeee",current_user.get_id())
 			if int(user.id) == int(current_user.get_id()):
 				news_data = news_scrapping()
 				news_data_title1 = news_data['title'][0].strip()
