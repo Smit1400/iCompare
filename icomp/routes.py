@@ -6,10 +6,19 @@ from flask_login import login_user ,current_user ,logout_user
 import numpy as np
 import pickle
 import warnings
+from icomp.flipkart_scrapper import flipkart_scraping
+from icomp.amazon_scrapper import amazon_scrapping
+from icomp.news_scrapper import news_scrapping
 warnings.filterwarnings("ignore")
 
-# my_model = pickle.load(open('model_predict','rb'))
-# pr = joblib.load('model_joblib')
+name = ''
+price = ''
+description = ''
+a_name = ''
+a_price = ''
+a_description = ''
+
+
 
 @app.route("/")
 @app.route("/home",methods=['GET','POST'])
@@ -23,19 +32,55 @@ def home():
 def about():
 	return render_template('about_final.html')
 
-@app.route("/products")
+@app.route("/products",methods=['GET','POST'])
 def products():
 	pred=None
-	return render_template('products_final.html',pred=pred)
+	if request.method == "POST":
+		product_name = request.form["product"]
+		return redirect(url_for("product",name=product_name))
+	elif request.method == "GET":
+		global name ,price, description, a_name, a_price, a_description
+		name = request.args.get('product')
+		if(name):
+			flip_data = flipkart_scraping(name)
+			name = flip_data["name"]
+			price = flip_data["price"]
+			description = flip_data["description"]
+			amazon_data = amazon_scrapping(name)
+			a_name = amazon_data["name"]
+			a_price = amazon_data["price"]
+			a_description = amazon_data["description"]
+			return render_template('products_final.html',flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description ,pred=pred)
+		else:
+			return render_template('products_final.html',pred=pred)
+	
+
+
+
+@app.route("/<p_name>")
+def product(p_name):
+	global name ,price, description, a_name, a_price, a_description
+	flip_data = flipkart_scraping(name)
+	name = flip_data["name"]
+	price = flip_data["price"]
+	description = flip_data["description"]
+	amazon_data = amazon_scrapping(name)
+	a_name = amazon_data["name"]
+	a_price = amazon_data["price"]
+	a_description = amazon_data["description"]
+	return render_template('products_final.html',flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description )
 
 @app.route("/download_graph",methods=['GET','POST'])
 def download_graph():
+	global name
 	if request.method == "POST":
+		print("hey my name is : ",name)
 		path = 'graph_images/iphone732.png'
 		return send_file(path,as_attachment=True)
 
 @app.route('/predict',methods=['GET','POST'])
 def predict():
+	global name ,price, description, a_name, a_price, a_description
 	with open('icomp/model_predict','rb') as f:
 		mp = pickle.load(f)
 	if request.method == "POST":
@@ -46,7 +91,7 @@ def predict():
 		l=[l]
 		pred  = int(mp.predict(l)[0])
 		print(pred)
-		return render_template('products_final.html',pred = pred,date=value)
+		return render_template('products_final.html',pred = pred,date=value, flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description)
 	# features = request.form.values()
 	# print(features)
 
@@ -89,3 +134,35 @@ def signup():
 def logout():
 	logout_user()
 	return redirect(url_for('home'))
+
+@app.route("/admin",methods=['GET','POST'])
+def admin():
+	if request.method == 'POST':
+		if current_user.is_authenticated:
+			user = User.query.filter_by(username = 'smit.ds').first()
+			print("heeeeeeeeeeeeeeeeeeeeeeeeee: ",user.id,"ouyeeeeeeeeeeeeeeeeeeeee",current_user.get_id())
+			if int(user.id) == int(current_user.get_id()):
+				news_data = news_scrapping()
+				news_data_title1 = news_data['title'][0].strip()
+				news_data_title2 = news_data['title'][1].strip()
+				news_data_title3 = news_data['title'][2].strip()
+				news_data_link1 = news_data['link'][0]
+				news_data_link2 = news_data['link'][1]
+				news_data_link3 = news_data['link'][2]
+				news_data_content1 = news_data['content'][0]
+				news_data_content2 = news_data['content'][1]
+				news_data_content3 = news_data['content'][2]
+				news_object_1 = News(title=news_data_title1,content=news_data_content1)
+				news_object_2 = News(title=news_data_title2,content=news_data_content2)
+				news_object_3 = News(title=news_data_title3,content=news_data_content3)
+				db.session.add(news_object_1)
+				db.session.add(news_object_2)
+				db.session.add(news_object_3)
+				db.session.commit()
+				print("All record added ")
+				return render_template('admin.html')
+			else:
+				print("In your face!")
+
+		return render_template('admin.html')
+	return render_template('admin.html')
