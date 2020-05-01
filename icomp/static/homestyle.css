@@ -10,7 +10,7 @@
 
 body
 {
-    background-image: url('pics/aboutpage.jpeg');
+    background-image: url('pics/indexwallpaper.png');
     height: 500px;
     background-size: cover;
     font-family: 'Dosis', sans-serif;
@@ -43,7 +43,7 @@ hr {
 
 .cardSet1
 {
-    background-color:lightskyblue;
+    background-color:lightskyblue
 }
 
 .cardSet2

@@ -43,7 +43,7 @@ def home():
 		n1_content = news_data['content'][0]
 		n2_content = news_data['content'][1]
 		n3_content = news_data['content'][2]
-	return render_template('home_final.html',n1_title=n1_title,n1_link=n1_link,n2_link=n2_link,n3_link=n3_link,n2_title=n2_title,n3_title=n3_title,n1_conten=n1_content,n2_content=n2_content,n3_content=n3_content)
+	return render_template('home_final.html',n1_title=n1_title,n1_link=n1_link,n2_link=n2_link,n3_link=n3_link,n2_title=n2_title,n3_title=n3_title,n1_content=n1_content,n2_content=n2_content,n3_content=n3_content)
 
 @app.route("/about")
 def about():
