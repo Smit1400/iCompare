@@ -141,17 +141,6 @@ pyflakes==2.1.1
 pygame==1.9.6
 Pygments==2.3.1
 pylint==2.3.1
-pyodbc==4.0.26
-pyOpenSSL==19.0.0
-pyparsing==2.3.1
-pyreadline==2.1
-pyrsistent==0.14.11
-PySocks==1.6.8
-pytesseract==0.3.1
-pytest==4.3.1
-pytest-arraydiff==0.3
-pytest-astropy==0.5.0
-pytest-doctestplus==0.3.0
 pytest-openfiles==0.3.2
 pytest-remotedata==0.3.1
 python-dateutil==2.8.0
