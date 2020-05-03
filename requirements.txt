@@ -30,10 +30,6 @@ cloudpickle==0.8.0
 colorama==0.4.1
 colorlover==0.3.0
 comtypes==1.1.7
-conda==4.8.3
-conda-build==3.17.8
-conda-package-handling==1.3.11
-conda-verify==3.1.1
 configparser==5.0.0
 contextlib2==0.5.5
 crayons==0.3.0
@@ -63,14 +59,7 @@ future==0.17.1
 gast==0.2.2
 gevent==1.4.0
 glob2==0.6
-google-api-core==1.15.0
-google-auth==1.10.0
-google-auth-oauthlib==0.4.1
-google-cloud-vision==0.41.0
-google-pasta==0.1.8
-googleapis-common-protos==1.6.0
-greenlet==0.4.15
-grpcio==1.26.0
+
 h5py==2.9.0
 heapdict==1.0.0
 html5lib==1.0.1
@@ -92,12 +81,6 @@ Jinja2==2.11.1
 joblib==0.14.1
 jsmin==2.2.2
 jsonschema==3.0.1
-jupyter==1.0.0
-jupyter-client==5.2.4
-jupyter-console==6.0.0
-jupyter-core==4.4.0
-jupyterlab==0.35.4
-jupyterlab-server==0.2.0
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.0
 keyring==18.0.0
@@ -109,7 +92,6 @@ locket==0.2.0
 lxml==4.3.2
 Markdown==3.1.1
 MarkupSafe==1.1.1
-matplotlib==3.0.3
 mccabe==0.6.1
 menuinst==1.4.16
 mistune==0.8.4
@@ -215,7 +197,6 @@ sortedcontainers==2.1.0
 soupsieve==1.8
 Sphinx==1.8.5
 sphinxcontrib-websupport==1.1.0
-spyder==3.3.3
 spyder-kernels==0.4.2
 SQLAlchemy==1.3.1
 sqlparse==0.3.0
