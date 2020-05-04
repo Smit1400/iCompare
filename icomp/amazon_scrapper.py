@@ -4,9 +4,14 @@ from bs4 import BeautifulSoup
 def amazon_scrapping(product):
 
     amazon_base_url = "https://www.amazon.in/s?k="
-    product_name = product.replace(" ", "+")
-    add = '&ref=nb_sb_noss_2'
-    amazon_url = amazon_base_url + product_name 
+
+    try:
+        product_name = product.replace(" ", "+")
+        add = '&ref=nb_sb_noss_2'
+        amazon_url = amazon_base_url + product_name 
+    except:
+        print("No Search found")
+        return None
 
     # print(amazon_url)
 
@@ -59,4 +64,3 @@ def amazon_scrapping(product):
 
 
 # amazon_scrapping("iphone 11 pro max")
-

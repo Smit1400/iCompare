@@ -6,8 +6,13 @@ from datetime import date
 def flipkart_scraping(product):
     print(product)
     flipkart_base_url = "https://www.flipkart.com/search?q="
-    product_name = product.replace(" ", "+")
-    flipkart_url = flipkart_base_url + product_name 
+
+    try:
+        product_name = product.replace(" ", "+")
+        flipkart_url = flipkart_base_url + product_name
+    except:
+        print("No search found :")
+        return None 
 
     #print(flipkart_url)
 
@@ -37,7 +42,8 @@ def flipkart_scraping(product):
             description = product_soup.find_all("li", class_='_2-riNZ')
         except :
             print("The product entered cannot be found :")
-            exit()
+            return None
+            # exit()
 
     print("\nName :  ",name)
     print("\nPrice : ",price)
