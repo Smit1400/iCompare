@@ -76,7 +76,7 @@ def products():
 			return render_template('products_final.html',flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description ,pred=pred)
 		else:
 			return render_template('products_final.html',pred=pred)
-	
+	return render_template('products_final.html',pred=pred)
 
 
 
