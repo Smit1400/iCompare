@@ -52,34 +52,58 @@ def about():
 @app.route("/products",methods=['GET','POST'])
 def products():
 	pred=None
-	# if request.method == "POST":
-	# 	product_name = request.form["product"]
-	# 	return redirect(url_for("product",name=product_name))
 	if request.method == "POST":
-		global name ,price, description, a_name, a_price, a_description
-		name = request.form['product']
-		if(name):
-			flip_data = flipkart_scraping(name)
-			if(flip_data):
-				name = flip_data["name"]
-				price = flip_data["price"]
-				description = flip_data["description"]
-			else:
-				name = "Not found"
-			amazon_data = amazon_scrapping(name)
-			if (amazon_data):
-				a_name = amazon_data["name"]
-				a_price = amazon_data["price"]
-				a_description = amazon_data["description"]
-			else:
-				a_name = "Not found"
-			return render_template('products_final.html',flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description ,pred=pred)
-		else:
-			return render_template('products_final.html',pred=pred)
-	return render_template('products_final.html',pred=pred)
+		product_name = request.form["product"]
+		print("hii" + product_name)
+		return redirect(url_for("product",p_name=product_name))
+	else:
+		# global name ,price, description, a_name, a_price, a_description
+		# name = request.args.get('product')
+		# if(name):
+		# 	flip_data = flipkart_scraping(name)
+		# 	if(flip_data):
+		# 		name = flip_data["name"]
+		# 		price = flip_data["price"]
+		# 		description = flip_data["description"]
+		# 	else:
+		# 		pass
+		# 		name = "Not found"
+		# 	amazon_data = amazon_scrapping(name)
+		# 	if (amazon_data):
+		# 		a_name = amazon_data["name"]
+		# 		a_price = amazon_data["price"]
+		# 		a_description = amazon_data["description"]
+		# 	else:
+		# 		pass
+		# 		a_name = "Not found"
+		# 	return render_template('products_final.html',flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description ,pred=pred)
+		# else:
+		# 	return render_template('products_final.html',pred=pred)
+		return render_template('products_final.html',pred=pred)
+	
 
 
 
+@app.route("/<p_name>")
+def product(p_name):
+	global name ,price, description, a_name, a_price, a_description
+	flip_data = flipkart_scraping(p_name)
+	if(flip_data):
+		name = flip_data["name"]
+		price = flip_data["price"]
+		description = flip_data["description"]
+	else:
+		pass
+		# name = "Not found"
+	amazon_data = amazon_scrapping(p_name)
+	if(amazon_data):
+		a_name = amazon_data["name"]
+		a_price = amazon_data["price"]
+		a_description = amazon_data["description"]
+	else:
+		pass
+		# a_name = "Not found"
+	return render_template('products_final.html',flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description )
 
 
 @app.route("/download_graph",methods=['GET','POST'])

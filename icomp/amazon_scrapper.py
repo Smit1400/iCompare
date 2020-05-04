@@ -24,9 +24,12 @@ def amazon_scrapping(product):
 
     #product_code = amazon_soup.find("div", class_='sg-col-20-of-24')#['data-asin']
 
-    product_code = amazon_soup.select('div[data-index]')[0]['data-asin']
-    if(product_code == ''):
-        product_code = amazon_soup.select('div[data-index]')[1]['data-asin']
+    try:
+        product_code = amazon_soup.select('div[data-index]')[0]['data-asin']
+        if(product_code == ''):
+            product_code = amazon_soup.select('div[data-index]')[1]['data-asin']
+    except:
+        return None
 
     # print(product_code)
 
@@ -62,4 +65,6 @@ def amazon_scrapping(product):
         print("An error occured")
         return None
 
+
+# amazon_scrapping("iphone 11 pro max")
 

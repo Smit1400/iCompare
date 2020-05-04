@@ -45,12 +45,12 @@ def flipkart_scraping(product):
             return None
             # exit()
 
-    print("\nName :  ",name)
-    print("\nPrice : ",price)
-    print("\nDescription : ")
+    # print("\nName :  ",name)
+    # print("\nPrice : ",price)
+    # print("\nDescription : ")
     product_des = []
     for des in description:
-        print("        ",des.text)
+        # print("        ",des.text)
         product_des.append(des.text)
 
     data = {"name":name,"price":price,"description":product_des}

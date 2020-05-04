@@ -10,9 +10,9 @@
 
 body
 {
-    background-image: url('pics/aboutpage.png');
+    background-image: url('pics/indexwallpaper.png');
     height: auto;
-    min-height: 100%;
+    /*min-height: 100%;*/
     background-size: cover;
     /* background-repeat: no-repeat; */
     background-position: center;
@@ -46,12 +46,12 @@ hr {
 
 .cardSet1
 {
-    background-color:lightskyblue
+    background-color:lightgrey
 }
 
 .cardSet2
 {
-    background-color:lightskyblue;
+    background-color:lightgrey;
 }
 
 .navbar
