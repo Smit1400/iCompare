@@ -66,5 +66,5 @@ def amazon_scrapping(product):
         return None
 
 
-# amazon_scrapping("iphone 11 pro max")
+print(amazon_scrapping("iphone 7"))
 

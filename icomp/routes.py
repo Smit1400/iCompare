@@ -82,7 +82,11 @@ def products():
 		return render_template('products_final.html',pred=pred)
 	
 
-
+@app.route('/newroute',methods=['GET','POST'])
+def newroute():
+	if request.method == 'GET':
+		pro = request.form['iphone7']
+		print("Sdsdsf  =  ",pro)
 
 @app.route("/<p_name>")
 def product(p_name):
