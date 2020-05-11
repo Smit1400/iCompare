@@ -17,7 +17,7 @@ def news_scrapping():
 
     all_news = news_site_soup.findAll("div", {"class" : "row asset"})
 
-    i = 1
+    i = 0
     while(news_count < 3):
 
         news_title_scrapped = all_news[i].find("h2").text
@@ -26,10 +26,7 @@ def news_scrapping():
 
             news_site = requests.get(news_link_scrapped, headers= headers)
             news_site_soup = BeautifulSoup(news_site.text, "html.parser")
-            try:
-                second_para = news_site_soup.find("p",class_="speakableTextP2").text
-            except:
-                second_para = ''
+            second_para = news_site_soup.find("p",class_="speakableTextP2").text
             
             # print("\n",news_content)
             # print(news_link)
