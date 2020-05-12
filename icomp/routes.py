@@ -1,4 +1,4 @@
-from flask import render_template,redirect ,url_for ,flash, request, send_file
+from flask import render_template,redirect ,url_for ,flash, request, send_file,session
 from icomp.forms import SignUpForm,LoginForm
 from icomp.models import User ,News
 from icomp import app ,db ,bcrypt
@@ -11,12 +11,6 @@ from icomp.amazon_scrapper import amazon_scrapping
 from icomp.news_scrapper import news_scrapping
 warnings.filterwarnings("ignore")
 
-name = ''
-price = ''
-description = ''
-a_name = ''
-a_price = ''
-a_description = ''
 n1_title=''
 n1_link=''
 n1_content=''
@@ -96,6 +90,10 @@ def product(p_name):
 		name = flip_data["name"]
 		price = flip_data["price"]
 		description = flip_data["description"]
+		session['name'] = name
+		session['price'] = price
+		session['description'] = description
+
 	else:
 		pass
 		# name = "Not found"
@@ -104,6 +102,10 @@ def product(p_name):
 		a_name = amazon_data["name"]
 		a_price = amazon_data["price"]
 		a_description = amazon_data["description"]
+		session['a_name'] = a_name
+		session['a_price'] = a_price
+		session['a_description'] = a_description
+
 	else:
 		pass
 		# a_name = "Not found"
@@ -131,7 +133,7 @@ def predict():
 		l=[l]
 		pred  = int(mp.predict(l)[0])
 		print(pred)
-		return render_template('products_final.html',pred = pred,date=value, flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description)
+		return render_template('products_final.html',pred = pred,date=value, flip_name = session['name'],flip_price=session['price'],flip_des=session['description'] ,amazon_name = session['a_name'],amazon_price=session['a_price'],amazon_des=session['a_description'])
 	# features = request.form.values()
 	# print(features)
 

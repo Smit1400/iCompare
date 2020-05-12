@@ -41,7 +41,7 @@ def flipkart_scraping(product):
             price = int(product_soup.find("div", class_="_1vC4OE _3qQ9m1").text[1:].replace(',', ""))
             description = product_soup.find_all("li", class_='_2-riNZ')
         except :
-            print("The product entered cannot be found :")
+            print("The product entered cannot be found flipkart:")
             return None
             # exit()
 
