@@ -99,6 +99,9 @@ def product(p_name):
 		name=''
 		price=''
 		description=''
+		session['name'] = name
+		session['price'] = price
+		session['description'] = description
 		# name = "Not found"
 	amazon_data = amazon_scrapping(p_name)
 	if(amazon_data):
@@ -113,6 +116,9 @@ def product(p_name):
 		a_name=''
 		a_price=''
 		a_description=''
+		session['a_name'] = a_name
+		session['a_price'] = a_price
+		session['a_description'] = a_description
 		# a_name = "Not found"
 	return render_template('products_final.html',flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description )
 
