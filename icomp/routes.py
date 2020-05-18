@@ -11,12 +11,7 @@ from icomp.amazon_scrapper import amazon_scrapping
 from icomp.news_scrapper import news_scrapping
 warnings.filterwarnings("ignore")
 
-name = ''
-price = ''
-description = ''
-a_name = ''
-a_price = ''
-a_description = ''
+
 n1_title=''
 n1_link=''
 n1_content=''
@@ -129,7 +124,6 @@ def download_graph():
 
 @app.route('/predict',methods=['GET','POST'])
 def predict():
-	global name ,price, description, a_name, a_price, a_description
 	with open('icomp/model_predict','rb') as f:
 		mp = pickle.load(f)
 	if request.method == "POST":
