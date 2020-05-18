@@ -51,40 +51,7 @@ def products():
 	if request.method == "POST":
 		product_name = request.form["product"]
 		print("hii" + product_name)
-		flip_data = flipkart_scraping(product_name)
-		if(flip_data):
-			name = flip_data["name"]
-			price = flip_data["price"]
-			description = flip_data["description"]
-			session['name'] = name
-			session['price'] = price
-			session['description'] = description
-
-		else:
-			name=''
-			price=''
-			description=''
-			session['name'] = name
-			session['price'] = price
-			session['description'] = description
-			# name = "Not found"
-		amazon_data = amazon_scrapping(product_name)
-		if(amazon_data):
-			a_name = amazon_data["name"]
-			a_price = amazon_data["price"]
-			a_description = amazon_data["description"]
-			session['a_name'] = a_name
-			session['a_price'] = a_price
-			session['a_description'] = a_description
-
-		else:
-			a_name=''
-			a_price=''
-			a_description=''
-			session['a_name'] = a_name
-			session['a_price'] = a_price
-			session['a_description'] = a_description
-		return render_template('products_final.html',flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description )
+		return redirect(url_for("product",p_name=product_name))
 	else:
 		# global name ,price, description, a_name, a_price, a_description
 		# name = request.args.get('product')

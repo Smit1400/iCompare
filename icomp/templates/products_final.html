@@ -126,7 +126,7 @@
       <hr>
       <h5 class="class-subtitle">Sometext</h5>
       <p>CLICK THE BUTTON BELOW TO VIEW THE FUTURE PREDICTION BASED ON THE YOUR INPUT</p>
-      <form action="/predict" method="POST">
+      <form action="{{ url_for('predict') }}" method="POST">
         <label for="prediction">Input:</label>
         <input type="date" id="prediction" name="prediction">
         <input type="submit">
