@@ -2,7 +2,7 @@ from flask import render_template,redirect ,url_for ,flash, request, send_file,s
 from icomp.forms import SignUpForm,LoginForm
 from icomp.models import User ,News
 from icomp import app ,db ,bcrypt
-from flask_login import login_user ,current_user ,logout_user
+from flask_login import login_user ,current_user ,logout_user, login_required
 import numpy as np
 import pickle
 import warnings
@@ -11,6 +11,12 @@ from icomp.amazon_scrapper import amazon_scrapping
 from icomp.news_scrapper import news_scrapping
 warnings.filterwarnings("ignore")
 
+name = ''
+price = ''
+description = ''
+a_name = ''
+a_price = ''
+a_description = ''
 n1_title=''
 n1_link=''
 n1_content=''
@@ -44,6 +50,7 @@ def about():
 	return render_template('about_final.html')
 
 @app.route("/products",methods=['GET','POST'])
+@login_required
 def products():
 	pred=None
 	if request.method == "POST":
@@ -84,6 +91,7 @@ def newroute():
 
 @app.route("/<p_name>")
 def product(p_name):
+	global name ,price, description, a_name, a_price, a_description
 	flip_data = flipkart_scraping(p_name)
 	if(flip_data):
 		name = flip_data["name"]
@@ -108,7 +116,7 @@ def product(p_name):
 	else:
 		pass
 		# a_name = "Not found"
-	return render_template('products_final.html',flip_name = session['name'],flip_price=session['price'],flip_des=session['description'] ,amazon_name = session['a_name'],amazon_price=session['a_price'],amazon_des=session['a_description'])
+	return render_template('products_final.html',flip_name = name,flip_price=price,flip_des=description ,amazon_name = a_name,amazon_price=a_price,amazon_des=a_description )
 
 
 @app.route("/download_graph",methods=['GET','POST'])
@@ -121,6 +129,7 @@ def download_graph():
 
 @app.route('/predict',methods=['GET','POST'])
 def predict():
+	global name ,price, description, a_name, a_price, a_description
 	with open('icomp/model_predict','rb') as f:
 		mp = pickle.load(f)
 	if request.method == "POST":
