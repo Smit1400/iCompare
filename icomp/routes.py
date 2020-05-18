@@ -86,7 +86,6 @@ def newroute():
 
 @app.route("/<p_name>")
 def product(p_name):
-	global name ,price, description, a_name, a_price, a_description
 	flip_data = flipkart_scraping(p_name)
 	if(flip_data):
 		name = flip_data["name"]
