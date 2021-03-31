@@ -15,7 +15,7 @@ Jinja2==2.11.1
 joblib==0.14.1
 jsonschema==3.0.1
 lazy-object-proxy==1.4
-lxml==4.3.2
+lxml==4.6.3
 Markdown==3.1.1
 mlxtend==0.17.2
 mysql-connector-python==8.0.18
