@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 def amazon_scrapping(product):
-    print("Product: ",product)
+
     amazon_base_url = "https://www.amazon.in/s?k="
 
     try:
@@ -62,9 +62,8 @@ def amazon_scrapping(product):
         return amazon_data
 
     except :
-        print("An error occured amazon")
+        print("An error occured")
         return None
 
 
 # print(amazon_scrapping("iphone 7"))
-

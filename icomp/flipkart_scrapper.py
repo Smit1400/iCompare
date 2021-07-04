@@ -5,56 +5,59 @@ from datetime import date
 
 def flipkart_scraping(product):
     print(product)
-    flipkart_base_url = "https://www.flipkart.com/search?q="
-
     try:
-        product_name = product.replace(" ", "+")
-        flipkart_url = flipkart_base_url + product_name
+        flipkart_base_url = "https://www.flipkart.com/search?q="
+
+        try:
+            product_name = product.replace(" ", "+")
+            flipkart_url = flipkart_base_url + product_name
+        except:
+            print("No search found :")
+            return None 
+
+        #print(flipkart_url)
+
+        headers = {"User-Agent" : "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36"}
+
+        flipkart_site = requests.get(flipkart_url, headers= headers)
+
+        flipkart_soup = BeautifulSoup(flipkart_site.text, "html.parser")
+
+        try:
+            name = flipkart_soup.find("div",class_='_4rR01T').text
+            price = int(flipkart_soup.find("div", class_="_30jeq3 _1_WHN1").text[1:].replace(',', ""))
+            description = list(flipkart_soup.find("ul", class_='_1xgFaf').children)
+        except:
+            try :
+                product_link = flipkart_soup.find("a",class_='_1fQZEK')["href"]
+                product_url = "https://www.flipkart.com" + product_link
+
+                #print(product_url)
+
+                product_site = requests.get(product_url, headers=headers)
+
+                product_soup = BeautifulSoup(product_site.text, "html.parser")
+
+                name = product_soup.find("span", class_='B_NuCI').text
+                price = int(product_soup.find("div", class_="_30jeq3 _16Jk6d").text[1:].replace(',', ""))
+                description = product_soup.find_all("li", class_='_21Ahn-')
+            except :
+                print("The product entered cannot be found :")
+                return None
+                # exit()
+
+        # print("\nName :  ",name)
+        # print("\nPrice : ",price)
+        # print("\nDescription : ")
+        product_des = []
+        for des in description:
+            # print("        ",des.text)
+            product_des.append(des.text)
+
+        data = {"name":name,"price":price,"description":product_des}
+        return data
     except:
-        print("No search found :")
-        return None 
-
-    #print(flipkart_url)
-
-    headers = {"User-Agent" : "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.117 Safari/537.36"}
-
-    flipkart_site = requests.get(flipkart_url, headers= headers)
-
-    flipkart_soup = BeautifulSoup(flipkart_site.text, "html.parser")
-
-    try:
-        name = flipkart_soup.find("div",class_='_3wU53n').text
-        price = int(flipkart_soup.find("div", class_="_1vC4OE _2rQ-NK").text[1:].replace(',', ""))
-        description = list(flipkart_soup.find("ul", class_='vFw0gD').children)
-    except:
-        try :
-            product_link = flipkart_soup.find("a",class_='Zhf2z-')["href"]
-            product_url = "https://www.flipkart.com" + product_link
-
-            #print(product_url)
-
-            product_site = requests.get(product_url, headers=headers)
-
-            product_soup = BeautifulSoup(product_site.text, "html.parser")
-
-            name = product_soup.find("span", class_='_35KyD6').text
-            price = int(product_soup.find("div", class_="_1vC4OE _3qQ9m1").text[1:].replace(',', ""))
-            description = product_soup.find_all("li", class_='_2-riNZ')
-        except :
-            print("The product entered cannot be found flipkart:")
-            return None
-            # exit()
-
-    # print("\nName :  ",name)
-    # print("\nPrice : ",price)
-    # print("\nDescription : ")
-    product_des = []
-    for des in description:
-        # print("        ",des.text)
-        product_des.append(des.text)
-
-    data = {"name":name,"price":price,"description":product_des}
-    return data
+        return None
 
 
 
