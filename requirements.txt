@@ -19,7 +19,7 @@ lxml==4.3.2
 Markdown==3.1.1
 mlxtend==0.17.2
 mysql-connector-python==8.0.18
-numpy==1.17.4
+numpy==1.22.0
 numpydoc==0.8.0
 pandas==0.24.2
 pandas-datareader==0.8.1
